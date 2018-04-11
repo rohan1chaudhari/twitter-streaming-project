@@ -19,7 +19,6 @@ syntax: glob
 *.iml
 
 # building
-target
 build
 null
 tmp*

@@ -15,8 +15,9 @@ object Streamer {
   
   def main(args : Array[String]) {
     println("Hello World ! ")
-
-
+    if(args.length!=1)
+      println("Parameter error")
+    val x = args(0).toInt
     //Config
     val config = new SparkConf().setAppName("twitter-stream-sentiment")
     val sc = new SparkContext(config)
@@ -32,11 +33,14 @@ object Streamer {
     //stream.foreachRDD(rdd => println(rdd))
     // Your code here
 
-    val data = stream.map {status => (status.getHashtagEntities.map(_.getText),status.getText(),status.getGeoLocation(),status.getPlace())  }
+    val data = stream.map {status => (status.getHashtagEntities.map(_.getText),status.getText(),status.getGeoLocation().getLatitude(),status.getGeoLocation().getLongitude,status.getPlace().getCountry())  }
     val tags = stream.flatMap(status => status.getHashtagEntities.map(_.getText))
 
+    data.saveAsTextFiles("~/tweets-data"+Calendar.getInstance().getTime())
+    data.saveAsTextFiles("~/tweets-tags"+Calendar.getInstance().getTime())
     ssc.start()
-    ssc.awaitTermination()
+    if(stream.count()==x)
+      ssc.stop(true,true)
   }
 
 }
