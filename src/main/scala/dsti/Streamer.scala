@@ -41,6 +41,9 @@ object Streamer {
     ssc.start()
     ssc.awaitTermination()
 
+    if(stream.count()==x)
+      ssc.stop(true,true)
+
   }
 
 }
