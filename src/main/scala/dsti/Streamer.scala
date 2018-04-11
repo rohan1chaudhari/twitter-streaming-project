@@ -39,8 +39,8 @@ object Streamer {
     data.saveAsTextFiles("~/tweets-data"+Calendar.getInstance().getTime())
     data.saveAsTextFiles("~/tweets-tags"+Calendar.getInstance().getTime())
     ssc.start()
-    if(stream.count()==x)
-      ssc.stop(true,true)
+    ssc.awaitTermination()
+    
   }
 
 }
