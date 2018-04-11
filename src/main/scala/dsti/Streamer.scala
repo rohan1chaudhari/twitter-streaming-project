@@ -36,8 +36,8 @@ object Streamer {
     val data = stream.map {status => (status.getHashtagEntities.map(_.getText),status.getText(),status.getGeoLocation().getLatitude(),status.getGeoLocation().getLongitude,status.getPlace().getCountry())  }
     val tags = stream.flatMap(status => status.getHashtagEntities.map(_.getText))
 
-    data.saveAsTextFiles("tweets-data"+Calendar.getInstance().getTime())
-    data.saveAsTextFiles("tweets-tags"+Calendar.getInstance().getTime())
+    data.saveAsTextFiles("/home/rchaudhari/tweets-data"+Calendar.getInstance().getTime())
+    data.saveAsTextFiles("/home/rchaudhari/tweets-tags"+Calendar.getInstance().getTime())
     ssc.start()
     ssc.awaitTermination()
 
