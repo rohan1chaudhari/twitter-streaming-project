@@ -33,7 +33,7 @@ object Streamer {
     //stream.foreachRDD(rdd => println(rdd))
     // Your code here
 
-    val data = stream.map {status => (status.getHashtagEntities.map(_.getText),status.getText(),status.getGeoLocation().getLatitude(),status.getGeoLocation().getLongitude,status.getPlace().getCountry())  }
+    val data = stream.map {status => (status.getHashtagEntities.map(_.getText),status.getText())}//,status.getGeoLocation().getLatitude(),status.getGeoLocation().getLongitude,status.getPlace().getCountry())  }
     val tags = stream.flatMap(status => status.getHashtagEntities.map(_.getText))
 
     data.saveAsTextFiles("/home/rchaudhari/tweets-data")
