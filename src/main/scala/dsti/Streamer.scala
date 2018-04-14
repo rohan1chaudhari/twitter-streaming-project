@@ -5,7 +5,6 @@ import java.util.Calendar
 import org.apache.spark.streaming.twitter.TwitterUtils
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
-
 /**
  * @author ${user.name}
  */
@@ -27,22 +26,29 @@ object Streamer {
     System.setProperty("twitter4j.oauth.consumerSecret", "iax8ymF6PopnMxhxbESayIKeAkfbXbGQBdyAmki3IAGlTUZowJ")
     System.setProperty("twitter4j.oauth.accessToken", "331813667-4p6698Qt0eM4dRjNSF4PxZST19dGz3grq52pPtkY")
     System.setProperty("twitter4j.oauth.accessTokenSecret", "Oa7ooLmnyOUYQ0kTuHvD0oO8NEAvpKdSb1HpM46Ya6ZjV")
-    val stream = TwitterUtils.createStream(ssc, None,Array("strike","Strike"))
+    val stream = TwitterUtils.createStream(ssc, None,Array("Fortnite", "fortnite"))
 
 
     //stream.foreachRDD(rdd => println(rdd))
     // Your code here
 
-    val data = stream.map {status => (status.getHashtagEntities.map(_.getText),status.getText())}//,status.getGeoLocation().getLatitude(),status.getGeoLocation().getLongitude,status.getPlace().getCountry())  }
+
+    val data = stream.map {status => (status.getHashtagEntities.map(_.getText),status.getText(),status.getFavoriteCount(),status.getPlace(),status.getUser().getStatusesCount(),status.getUser().getFollowersCount+status.getUser().getFriendsCount)  }
     val tags = stream.flatMap(status => status.getHashtagEntities.map(_.getText))
+
+    var count : Long = 0
+
+    data.foreachRDD { r =>
+      count=count + r.count()
+    }
+
 
 
     data.saveAsTextFiles("/students/rchaudhari/tweets-data")
     tags.saveAsTextFiles("/students/rchaudhari/tweets-tags")
     ssc.start()
-    ssc.awaitTermination()
 
-    if(data.count()==x)
+    if(count==x)
       ssc.stop(true,true)
 
   }
