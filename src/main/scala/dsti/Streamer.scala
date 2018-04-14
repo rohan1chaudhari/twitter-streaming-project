@@ -36,20 +36,14 @@ object Streamer {
     val data = stream.map {status => (status.getHashtagEntities.map(_.getText),status.getText(),status.getFavoriteCount(),status.getPlace(),status.getUser().getStatusesCount(),status.getUser().getFollowersCount+status.getUser().getFriendsCount)  }
     val tags = stream.flatMap(status => status.getHashtagEntities.map(_.getText))
 
-    var count : Long = 0
-
-    data.foreachRDD { r =>
-      count=count + r.count()
-    }
 
 
 
     data.saveAsTextFiles("/students/rchaudhari/tweets-data")
     tags.saveAsTextFiles("/students/rchaudhari/tweets-tags")
     ssc.start()
+    ssc.awaitTermination()
 
-    if(count==x)
-      ssc.stop(true,true)
 
   }
 
