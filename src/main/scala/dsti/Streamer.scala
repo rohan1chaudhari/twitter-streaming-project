@@ -61,7 +61,7 @@ object Streamer {
     The data is stored in many directories and merging of the files should be done before proceeding to import in Hive
     */
 
-    //   To merge use linux command: cat /students/rchaudhari/tweets-data*/part*
+    //   To merge use linux command: cat /students/rchaudhari/tweets-data*/part* > merged-tweets
 
     data.saveAsTextFiles("/students/rchaudhari/tweets-data")
     tags.saveAsTextFiles("/students/rchaudhari/tweets-tags")
