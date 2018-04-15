@@ -29,20 +29,16 @@ object Streamer {
     val stream = TwitterUtils.createStream(ssc, None,Array("Fortnite", "fortnite"))
 
 
-    //stream.foreachRDD(rdd => println(rdd))
     // Your code here
 
 
     val data = stream.map {status => (status.getHashtagEntities.map(_.getText),status.getText(),status.getFavoriteCount(),status.getPlace(),status.getUser().getStatusesCount(),status.getUser().getFollowersCount+status.getUser().getFriendsCount)  }
     val tags = stream.flatMap(status => status.getHashtagEntities.map(_.getText))
 
-
-
-
     data.saveAsTextFiles("/students/rchaudhari/tweets-data")
     tags.saveAsTextFiles("/students/rchaudhari/tweets-tags")
     ssc.start()
-    ssc.awaitTermination()
+    ssc.awaitTerminationOrTimeout(300000)
 
 
   }
