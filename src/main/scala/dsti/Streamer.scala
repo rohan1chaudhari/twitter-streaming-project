@@ -47,8 +47,7 @@ object Streamer {
     The tweet texts had newline characters that needed to be replaced by a " "
       */
 
-    val data = stream.map {status => ""+status.getText().replaceAll("\n"," ")+","+status.getCreatedAt()+","+status.getFavoriteCount()+","
-      +status.getUser().getStatusesCount()+","+status.getUser().getFollowersCount+status.getUser().getFriendsCount()  }
+    val data = stream.map {status => ""+status.getText().replaceAll("\n"," ")+","+status.getCreatedAt()+","+status.getFavoriteCount()+","+status.getUser().getStatusesCount()+","+status.getUser().getFollowersCount+status.getUser().getFriendsCount()  }
 
     /*
     Tags used in the tweets
