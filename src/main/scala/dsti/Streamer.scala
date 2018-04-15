@@ -32,7 +32,7 @@ object Streamer {
     // Your code here
 
 
-    val data = stream.map {status => (status.getHashtagEntities.map(_.getText),status.getText(),status.getFavoriteCount(),status.getPlace(),status.getUser().getStatusesCount(),status.getUser().getFollowersCount+status.getUser().getFriendsCount)  }
+    val data = stream.map {status => (status.getHashtagEntities.map(_.getText),status.getText(),status.getFavoriteCount(),status.getPlace(),status.getUser().getStatusesCount(),status.getUser().getFollowersCount+status.getUser().getFriendsCount())  }
     val tags = stream.flatMap(status => status.getHashtagEntities.map(_.getText))
 
     data.saveAsTextFiles("/students/rchaudhari/tweets-data")
