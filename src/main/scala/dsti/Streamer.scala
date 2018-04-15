@@ -16,7 +16,7 @@ object Streamer {
     println("Hello World ! ")
     if(args.length!=1)
       println("Parameter error")
-    val x = args(0).toInt
+      val x = args(0).toInt
     //Config
     val config = new SparkConf().setAppName("twitter-stream-sentiment")
     val sc = new SparkContext(config)
@@ -32,7 +32,7 @@ object Streamer {
     // Your code here
 
 
-    val data = stream.map {status => (status.getHashtagEntities.map(_.getText),status.getText(),status.getCreatedAt(),status.getFavoriteCount(),status.getUser().getStatusesCount(),status.getUser().getFollowersCount+status.getUser().getFriendsCount())  }
+    val data = stream.map {status => ""+status.getText().replaceAll("\n"," ")+","+status.getCreatedAt()+","+status.getFavoriteCount()+","+status.getUser().getStatusesCount()+","+status.getUser().getFollowersCount+status.getUser().getFriendsCount()  }
     val tags = stream.flatMap(status => status.getHashtagEntities.map(_.getText))
 
     data.saveAsTextFiles("/students/rchaudhari/tweets-data")
