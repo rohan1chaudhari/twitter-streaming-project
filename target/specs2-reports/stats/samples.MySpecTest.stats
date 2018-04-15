@@ -41,3 +41,4 @@
 <samples.MySpecTest-stats timestamp="1523740463455"><stats time="21" expectations="3" successes="3" examples="3"></stats></samples.MySpecTest-stats>
 <samples.MySpecTest-stats timestamp="1523741336268"><stats time="16" expectations="3" successes="3" examples="3"></stats></samples.MySpecTest-stats>
 <samples.MySpecTest-stats timestamp="1523796573388"><stats time="23" expectations="3" successes="3" examples="3"></stats></samples.MySpecTest-stats>
+<samples.MySpecTest-stats timestamp="1523801273114"><stats time="16" expectations="3" successes="3" examples="3"></stats></samples.MySpecTest-stats>
